@@ -2,7 +2,7 @@
 
 **`pwdkit`** is a lightweight password toolkit that lets you:
 
-- Analyze password strength
+- Analyze password strength (Inspired: [passwordmeter](https://passwordmeter.com))
 - Get multiple password suggestions with scoring based on customizable rules
 
 ## Installation
