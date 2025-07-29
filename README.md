@@ -4,6 +4,7 @@
 
 - Analyze password strength (Inspired: [passwordmeter](https://passwordmeter.com))
 - Get multiple password suggestions with scoring based on customizable rules
+- Check if the password matches with the policy that is set
 
 ## Installation
 
@@ -28,6 +29,20 @@ const pwd_instance = new PasswordToolkit({
 console.log(pwd_instance.analyse("yzmk1W1Q^v"));
 // Output: { score: 92 }
 
+console.log(pwd_instance.isPolicySatisfied("yzmk1W1Qv"));
+// Output: false
+
+console.log(pwd_instance.getPolicy());
+// Output:
+{
+  minimum_characters: 10,
+  containsUpperCase: true,
+  containsLowerCase: true,
+  containsNumbers: true,
+  containsSpecialCharacters: true,
+  allowedSpecialCharacters: ["*", "^", "#", "@"],
+}
+
 console.log(pwd_instance.getSuggestions(3));
 // Example Output:
 [
@@ -50,12 +65,26 @@ const toolkit = new PasswordToolkit({
 const result = toolkit.analyse("MyS3cur3#Pass");
 console.log(result); // { score: ... }
 
+const is_pwd_matches_policy = toolkit.isPolicySatisfied("MyS3cur3#Pass"));
+// Output: true
+
+console.log(toolkit.getPolicy());
+// Output:
+{
+  minimum_characters: 12,
+  containsUpperCase: true,
+  containsLowerCase: true,
+  containsNumbers: true,
+  containsSpecialCharacters: true,
+  allowedSpecialCharacters: ["!", "%", "#"],
+}
+
 const suggestions = toolkit.getSuggestions(5);
 console.log(suggestions);
 
 ```
 
-## Options
+## Options / Policy
 
 Options that can be passed to PasswordToolkit
 | Option | Type | Default | Description |

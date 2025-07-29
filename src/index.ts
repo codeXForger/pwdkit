@@ -292,4 +292,55 @@ export class PasswordToolkit {
     }
     return results;
   }
+
+  getPolicy() {
+    let policy = {
+      minimum_characters: this.minimum_characters,
+      containsUpperCase: this.containsUpperCase,
+      containsLowerCase: this.containsLowerCase,
+      containsNumbers: this.containsNumbers,
+      containsSpecialCharacters: this.containsSpecialCharacters,
+      allowedSpecialCharacters: this.allowedSpecialCharacters,
+    };
+    return policy;
+  }
+
+  isPolicySatisfied(passwordTxt: string) {
+    let result = true;
+    let char_counts = this.getCharCounts(passwordTxt);
+    const pwd_length = passwordTxt.length;
+    if (pwd_length < this.minimum_characters) {
+      result = false;
+    }
+    if (this.containsUpperCase && char_counts.uppercase === 0) {
+      result = false;
+    }
+    if (this.containsLowerCase && char_counts.lowercase === 0) {
+      result = false;
+    }
+    if (this.containsNumbers && char_counts.digits === 0) {
+      result = false;
+    }
+    if (
+      this.containsSpecialCharacters &&
+      char_counts.special_characters === 0
+    ) {
+      result = false;
+    }
+    if (
+      this.allowedSpecialCharacters &&
+      !this.areSpecialCharsEqual(
+        this.allowedSpecialCharacters,
+        this.defaultAllowedSpecialCharacters
+      )
+    ) {
+      const containsAllowedSpecialChar = this.allowedSpecialCharacters.some(
+        (char) => passwordTxt.includes(char)
+      );
+      if (!containsAllowedSpecialChar) {
+        result = false;
+      }
+    }
+    return result;
+  }
 }
